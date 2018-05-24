@@ -1,20 +1,10 @@
 # <img src="assets/logo.png" width="400" alt="Puppetron">
 
-> [Puppeteer](https://github.com/GoogleChrome/puppeteer) (Headless Chrome Node API)-based rendering solution.
+> [Puppeteer](https://github.com/GoogleChrome/puppeteer)-based rendering solution.
+> Puppeteer is a Node library which provides a high-level API to control [headless](https://developers.google.com/web/updates/2017/04/headless-chrome) Chrome or Chromium.
 
-Videos & Tweets:
 
-- Demo <https://www.youtube.com/watch?v=n4sRp3qe_1Y>
-- `clipSelector` demo <https://www.youtube.com/watch?v=wYCrJu-Wy2E>
-- CJK fonts support <https://twitter.com/cheeaun/status/902340897433501696>
-- Emoji support <https://twitter.com/cheeaun/status/903492052452728832>
-
-🚧🚧🚧 PLEASE READ THIS 🚧🚧🚧
----
-
-**Do NOT use this for production use-cases.**
-
-This is just a demo site of what cool things that `Puppeteer` can do. Under any circumstances, this site may be down any time or be heavily rate-limited to prevent abuse.
+This is just a demo site of what cool things `Puppeteer` can do.
 
 Please check out what [Puppeteer](https://github.com/GoogleChrome/puppeteer) can do for your own use case and host on your own servers.
 
@@ -91,15 +81,11 @@ For local Chromium install:
 
 For Docker-based install:
 
-1. `docker build . -t puppet`
-2. `docker run -p 8080:3000 puppet`
+1. `docker build . -t puppetron`
+2. `docker run -p 8080:3000 puppetron`
 3. Load `localhost:8080`
-
-[![Deploy to now](https://deploy.now.sh/static/button.svg)](https://deploy.now.sh/?repo=https://github.com/cheeaun/puppetron)
 
 Credits
 ---
 
-Block list from [Prerender](https://github.com/prerender/prerender/blob/master/lib/resources/blocked-resources.json).
-
-This uses [`cheeaun/puppeteer`](https://hub.docker.com/r/cheeaun/puppeteer/) Docker image. Inspired by [`zenato/puppeteer`]((https://hub.docker.com/r/zenato/puppeteer/)), [`puppeteer-renderer`](https://github.com/zenato/puppeteer-renderer) and [Rendertron](https://render-tron.appspot.com/).
+This is forked from [cheeaun/puppetron](https://github.com/cheeaun/puppetron).

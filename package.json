@@ -6,19 +6,6 @@
   "scripts": {
     "start": "node index"
   },
-  "now": {
-    "name": "puppetron",
-    "type": "docker",
-    "alias": "puppetron.now.sh",
-    "files": [
-      "blocked.json",
-      "Dockerfile",
-      "index.html",
-      "index.js",
-      "package.json",
-      "yarn.lock"
-    ]
-  },
   "dependencies": {
     "jimp": "~0.2.28",
     "lru-cache": "~4.1.1",
