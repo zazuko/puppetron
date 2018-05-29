@@ -287,6 +287,7 @@ require('http').createServer(async (req, res) => {
       default: {
         const imageType = searchParams.get('imageType') || 'png';
         const thumbWidth = parseInt(searchParams.get('thumbWidth'), 10) || null;
+        const jpegQuality = parseInt(searchParams.get('jpegQuality'), 10) || 90;
         const fullPage = searchParams.get('fullPage') == 'true' || false;
         const clipSelector = searchParams.get('clipSelector');
 
@@ -311,7 +312,9 @@ require('http').createServer(async (req, res) => {
 
         const imageArgs = imageType === 'jpeg' ? {
           type: 'jpeg',
-          mime: 'image/jpeg'
+          mime: 'image/jpeg',
+          screenshotQuality: thumbWidth && thumbWidth < width ? 100 : jpegQuality,
+          resizeQuality: jpegQuality
         } : {
           type: 'png',
           mime: 'image/png'
@@ -319,6 +322,7 @@ require('http').createServer(async (req, res) => {
 
         const screenshot = await pTimeout(page.screenshot({
           type: imageArgs.type,
+          quality: imageArgs.screenshotQuality,
           fullPage,
           clip,
         }), 20 * 1000, 'Screenshot timed out');
@@ -330,7 +334,7 @@ require('http').createServer(async (req, res) => {
 
          if (thumbWidth && thumbWidth < width){
           const image = await jimp.read(screenshot);
-          image.resize(thumbWidth, jimp.AUTO).quality(90).getBuffer(imageArgs.mime, (err, buffer) => {
+          image.resize(thumbWidth, jimp.AUTO).quality(imageArgs.resizeQuality).getBuffer(imageArgs.mime, (err, buffer) => {
             res.end(buffer, 'binary');
           });
         } else {

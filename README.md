@@ -35,7 +35,8 @@ Global parameters:
 Parameters:
 
 - `imageType` - screenshot image type, can be either `jpeg` or `png` (default: `png`).
-- `thumbWidth` - width of thumbnail, respecting aspect ratio (no default, has to be smaller than `width`)
+- `jpegQuality` - the quality of the image, between 0-100. Not applicable to `png` images (default: `90`).
+- `thumbWidth` - width of thumbnail, respecting aspect ratio (no default, has to be smaller than `width`).
 - `fullPage` - takes a screenshot of the full scrollable page, instead of only the viewport (default: `false`).
 - `clipSelector` - CSS selector of element to be clipped (no default). E.g.: `.weather-forecast`.
 
