@@ -8,7 +8,7 @@ const jimp = require('jimp');
 const pTimeout = require('p-timeout');
 const LRU = require('lru-cache');
 const cache = LRU({
-  max: process.env.CACHE_SIZE || Infinity,
+  max: process.env.CACHE_SIZE || 20,
   maxAge: 1000 * 60, // 1 minute
   noDisposeOnSet: true,
   dispose: async (url, page) => {
@@ -70,14 +70,6 @@ require('http').createServer(async (req, res) => {
       'content-type': 'text/plain',
     });
     res.end('Something is wrong. Missing URL.');
-    return;
-  }
-
-  if (cache.itemCount > 20){
-    res.writeHead(420, {
-      'content-type': 'text/plain',
-    });
-    res.end(`There are ${cache.itemCount} pages in the current instance now. Please try again in few minutes.`);
     return;
   }
 
