@@ -170,11 +170,13 @@ require('http').createServer(async (req, res) => {
         height,
       });
 
+      const navigationTimeout = parseInt(searchParams.get('navigationTimeout'), 10) || 0;
       console.log('⬇️ Fetching ' + pageURL);
       await Promise.race([
         responsePromise,
         page.goto(pageURL, {
           waitUntil: 'networkidle0',
+          timeout: navigationTimeout
         })
       ]);
 
@@ -196,6 +198,8 @@ require('http').createServer(async (req, res) => {
     }
 
     console.log('💥 Perform action: ' + action);
+    
+    const actionTimeout = parseInt(searchParams.get('actionTimeout'), 10) || 10 * 1000;
 
     switch (action){
       case 'render': {
@@ -243,7 +247,7 @@ require('http').createServer(async (req, res) => {
           content = content.replace(/<!--[\s\S]*?-->/g, '');
 
           return content;
-        }), 10 * 1000, 'Render timed out');
+        }), actionTimeout, 'Render timed out');
 
         res.writeHead(200, {
           'content-type': 'text/html; charset=UTF-8',
@@ -267,7 +271,7 @@ require('http').createServer(async (req, res) => {
             bottom: '5mm',
             left: '5mm'
           }
-        }), 10 * 1000, 'PDF timed out');
+        }), actionTimeout, 'PDF timed out');
 
         res.writeHead(200, {
           'content-type': 'application/pdf',
@@ -317,7 +321,7 @@ require('http').createServer(async (req, res) => {
           quality: imageArgs.screenshotQuality,
           fullPage,
           clip,
-        }), 20 * 1000, 'Screenshot timed out');
+        }), actionTimeout, 'Screenshot timed out');
 
         res.writeHead(200, {
           'content-type': imageArgs.mime,

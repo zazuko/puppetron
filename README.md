@@ -23,6 +23,8 @@ Global parameters:
 
 - `width` - width of viewport/screenshot (default: `1024`)
 - `height` - height of viewport/screenshot (default: `768`)
+- `navigationTimeout` - timeout in milliseconds before navigation is aborted (default: timeout disabled) 
+- `actionTimeout` - timeout in milliseconds before (screenshot|render|pdf) action is aborted (default: `10 * 1000`)
 
 ### Screenshot
 
