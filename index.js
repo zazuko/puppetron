@@ -261,12 +261,20 @@ require('http').createServer(async (req, res) => {
         break;
       }
       case 'pdf': {
-        const format = searchParams.get('format') || null;
+        const format = searchParams.get('format') || 'A4';
+        const landscape = searchParams.get('landscape') == 'true' || false;
         const pageRanges = searchParams.get('pageRanges') || null;
 
         const pdf = await pTimeout(page.pdf({
-          format,
-          pageRanges,
+          format: format,
+          landscape: landscape,
+          pageRanges: pageRanges,
+          margin: {
+            top: '5mm',
+            right: '5mm',
+            bottom: '5mm',
+            left: '5mm'
+          }
         }), 10 * 1000, 'PDF timed out');
 
         res.writeHead(200, {

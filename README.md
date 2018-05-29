@@ -63,7 +63,8 @@ Parameters: *None*
 
 Parameters:
 
-- `format`: Paper format that [Puppeteer supports](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions). E.g.: `Letter`, `Legal`, `A4`, etc. (default: `Letter`)
+- `format`: Paper format that [Puppeteer supports](https://github.com/GoogleChrome/puppeteer/blob/master/docs/api.md#pagepdfoptions). E.g.: `Letter`, `Legal`, `A4`, etc. (default: `A4`)
+- `landscape`: Paper orientation. (default: `false`)
 - `pageRanges`: Paper ranges to print. E.g., `1-5`, `8`, `11-13` (default all pages)
 
 Development
