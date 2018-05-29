@@ -134,7 +134,7 @@ require('http').createServer(async (req, res) => {
 
       const nowTime = +new Date();
       let reqCount = 0;
-      await page.setRequestInterceptionEnabled(true);
+      await page.setRequestInterception(true);
       page.on('request', (request) => {
         const { url, method, resourceType } = request;
 
@@ -182,7 +182,7 @@ require('http').createServer(async (req, res) => {
       await Promise.race([
         responsePromise,
         page.goto(pageURL, {
-          waitUntil: 'networkidle',
+          waitUntil: 'networkidle0',
         })
       ]);
 
