@@ -277,6 +277,7 @@ require('http').createServer(async (req, res) => {
         break;
       }
       default: {
+        const imageType = searchParams.get('imageType') || 'png';
         const thumbWidth = parseInt(searchParams.get('thumbWidth'), 10) || null;
         const fullPage = searchParams.get('fullPage') == 'true' || false;
         const clipSelector = searchParams.get('clipSelector');
@@ -300,20 +301,28 @@ require('http').createServer(async (req, res) => {
           }
         }
 
-        const screenshot = await pTimeout(page.screenshot({
+        const imageArgs = imageType === 'jpeg' ? {
           type: 'jpeg',
+          mime: 'image/jpeg'
+        } : {
+          type: 'png',
+          mime: 'image/png'
+        };
+
+        const screenshot = await pTimeout(page.screenshot({
+          type: imageArgs.type,
           fullPage,
           clip,
         }), 20 * 1000, 'Screenshot timed out');
 
         res.writeHead(200, {
-          'content-type': 'image/jpeg',
+          'content-type': imageArgs.mime,
           'cache-control': 'public,max-age=31536000',
         });
 
-        if (thumbWidth && thumbWidth < width){
+         if (thumbWidth && thumbWidth < width){
           const image = await jimp.read(screenshot);
-          image.resize(thumbWidth, jimp.AUTO).quality(90).getBuffer(jimp.MIME_JPEG, (err, buffer) => {
+          image.resize(thumbWidth, jimp.AUTO).quality(90).getBuffer(imageArgs.mime, (err, buffer) => {
             res.end(buffer, 'binary');
           });
         } else {
