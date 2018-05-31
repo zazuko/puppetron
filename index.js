@@ -131,7 +131,9 @@ require('http').createServer(async (req, res) => {
       let reqCount = 0;
       await page.setRequestInterception(true);
       page.on('request', (request) => {
-        const { url, method, resourceType } = request;
+        const url = request.url();
+        const method = request.method();
+        const resourceType = request.resourceType();
 
         // Skip data URIs
         if (/^data:/i.test(url)){
