@@ -310,10 +310,11 @@ require('http').createServer(async (req, res) => {
           type: 'jpeg',
           mime: 'image/jpeg',
           screenshotQuality: thumbWidth && thumbWidth < width ? 100 : jpegQuality,
-          resizeQuality: jpegQuality
+          thumbQuality: jpegQuality
         } : {
           type: 'png',
-          mime: 'image/png'
+          mime: 'image/png',
+          thumbQuality: 100
         };
 
         const screenshot = await pTimeout(page.screenshot({
@@ -328,9 +329,9 @@ require('http').createServer(async (req, res) => {
           'cache-control': 'public,max-age=31536000',
         });
 
-         if (thumbWidth && thumbWidth < width){
+        if (thumbWidth && thumbWidth < width){
           const image = await jimp.read(screenshot);
-          image.resize(thumbWidth, jimp.AUTO).quality(imageArgs.resizeQuality).getBuffer(imageArgs.mime, (err, buffer) => {
+          image.resize(thumbWidth, jimp.AUTO).quality(imageArgs.thumbQuality).getBuffer(imageArgs.mime, (err, buffer) => {
             res.end(buffer, 'binary');
           });
         } else {
