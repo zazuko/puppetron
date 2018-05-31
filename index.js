@@ -63,24 +63,28 @@ require('http').createServer(async (req, res) => {
     return;
   }
 
-  const [_, action, url] = req.url.match(/^\/(screenshot|render|pdf)?\/?(.*)/i) || ['', '', ''];
+  const [_, action] = req.url.match(/^\/(screenshot|render|pdf)?\/?/i) || ['', ''];
+  const { searchParams } = new URL(`http://mydomain.net${req.url}`);
+  const encodedURL = searchParams.get('url');
 
-  if (!url){
+  if (!encodedURL){
     res.writeHead(400, {
       'content-type': 'text/plain',
     });
-    res.end('Something is wrong. Missing URL.');
+    res.end('Something is wrong. Missing url parameter.');
     return;
   }
 
-  let page, pageURL;
+  const pageURL = decodeURIComponent(encodedURL);
+
+  let page;
   try {
-    if (!/^https?:\/\//i.test(url)) {
-      throw new Error('Invalid URL');
+    if (!/^https?:\/\//i.test(pageURL)) {
+      throw new Error(`Invalid URL: ${pageURL}`);
     }
 
-    const { origin, hostname, pathname, searchParams } = new URL(url);
-    const path = decodeURIComponent(pathname);
+    const { origin, hostname, pathname, targetSearchParams } = new URL(pageURL);
+    const path = `${pathname}?${targetSearchParams}`;
 
     await new Promise((resolve, reject) => {
       const req = http.request({
@@ -98,7 +102,6 @@ require('http').createServer(async (req, res) => {
       req.end();
     });
 
-    pageURL = origin + path;
     let actionDone = false;
     const width = parseInt(searchParams.get('width'), 10) || 1024;
     const height = parseInt(searchParams.get('height'), 10) || 768;

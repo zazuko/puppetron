@@ -17,7 +17,7 @@ The API can perform 3 actions:
 - [Render](#render) - render and serialize a HTML copy of the web page
 - [PDF](#pdf) - generate a PDF of the web page
 
-**`URL`** - the URL with encoded `pathname`, `search` and `hash`.
+**`URL`** - the URL of the target page, [URI-encoded](https://en.wikipedia.org/wiki/Percent-encoding).
 
 Global parameters:
 
@@ -29,9 +29,9 @@ Global parameters:
 ### Screenshot
 
 ```
-/screenshot/{URL}
+/screenshot?url={URL}
 ...or
-/{URL}
+/?url={URL}
 ```
 
 Parameters:
@@ -45,7 +45,7 @@ Parameters:
 ### Render
 
 ```
-/render/{URL}
+/render?url={URL}
 ```
 
 Notes:
@@ -61,7 +61,7 @@ Parameters: *None*
 ### PDF
 
 ```
-/pdf/{URL}
+/pdf?url={URL}
 ```
 
 Parameters:

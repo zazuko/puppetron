@@ -79,17 +79,12 @@
 </form>
 <footer><p>Source on <a href="https://github.com/zazuko/puppetron" target="_blank">GitHub</a>, based on <a href="https://github.com/cheeaun/puppetron" target="_blank">cheeaun/puppetron</a>.</p></footer>
 <script>
-function encode(url){
-  return url.replace(/\?.*/i, function(m){
-    return encodeURIComponent(m);
-  });
-}
 var action;
 formtron.onsubmit = function(e){
   e.preventDefault();
-  var url = '/' + action + '/' + encode(formtron.url.value);
+  var url = '/' + action + '?url=' + encodeURIComponent(formtron.url.value);
   if (action == 'screenshot'){
-    location.href = url + '?width=' + window.innerWidth + '&height=' + window.innerHeight;
+    location.href = url + '&width=' + window.innerWidth + '&height=' + window.innerHeight;
   } else {
     location.href = url;
   }
