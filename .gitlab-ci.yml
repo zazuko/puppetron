@@ -15,7 +15,7 @@ prod:
     - docker push "$CI_REGISTRY_IMAGE"
     - docker tag "$CI_REGISTRY_IMAGE" "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_NAME"
-#    - wget $DEPLOY_WEBHOOK/puppetron-prod
+    - wget $DEPLOY_WEBHOOK/ssz-prod
   only:
     - tags
 
@@ -24,6 +24,6 @@ integ:
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:develop" .
     - docker push "$CI_REGISTRY_IMAGE:develop"
-#    - wget $DEPLOY_WEBHOOK/puppetron-integ
+    - wget $DEPLOY_WEBHOOK/ssz-integ
   only:
     - develop
